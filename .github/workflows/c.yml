@@ -1,0 +1,21 @@
+on: [push]
+  
+permissions:
+  contents: write
+  id-token: write
+  statuses: read
+
+jobs:           
+  deploy:
+    uses: ./.github/workflows/b.yml
+    secrets: inherit
+
+  infra:
+    needs: [ deploy ]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Module Source Code
+      uses: actions/checkout@v4
+    - name: Print Lambda S3 Bucket and Key
+      run: |
+        echo "Key Path: ${{ needs.deploy.outputs.test-value }}"
