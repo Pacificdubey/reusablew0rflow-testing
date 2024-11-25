@@ -1,0 +1,26 @@
+---
+name: tag-test
+
+on:
+  workflow_call:
+    outputs:
+      test-value:
+        description: "test-value"
+        value: ${{ jobs.get-url.outputs.test-value }}
+
+
+permissions:
+  id-token: write
+  contents: write
+  statuses: read
+
+jobs:
+  get-url:
+    runs-on: ubuntu-latest
+    outputs:
+        test-value: ${{steps.value.outputs.sha}}
+    steps:
+      - name: Get tag
+        id: value
+        run: |
+          echo "sha=123">>$GITHUB_OUTPUT
