@@ -1,0 +1,22 @@
+name: Environment
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: write
+  statuses: read
+
+
+jobs:
+  url:
+    uses: ./.github/workflows/a.yml
+    secrets: inherit
+
+  s3-deploy:
+    needs: [ url ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
