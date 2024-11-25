@@ -2,7 +2,10 @@ name: Environment
 
 on:
   workflow_call:
-
+    outputs:
+      test-value:
+        description: "test-value"
+        value: ${{ jobs.url.outputs.test-value }}
 permissions:
   id-token: write
   contents: write
